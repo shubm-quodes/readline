@@ -193,6 +193,15 @@ func (t *Terminal) ioloop() {
 				expectNextChar = true
 				continue
 			}
+		} else {
+			cfg := t.GetConfig()
+			if handler := cfg.KeyListeners[r]; handler != nil {
+				expectNextChar = true
+				processRune := handler()
+				if !processRune {
+					continue
+				}
+			}
 		}
 
 		expectNextChar = true

@@ -27,7 +27,13 @@ type Instance struct {
 	Operation *Operation
 }
 
+// return true if you'd like readline to continue processing this keypress
+type FuncKeypressHandler = func() (processRune bool)
+
 type Config struct {
+	// The handler func will be called when the mapped key combination is pressed
+	KeyListeners map[rune]FuncKeypressHandler
+
 	// prompt supports ANSI escape sequence, so we can color some characters even in windows
 	Prompt string
 
